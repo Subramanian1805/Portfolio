@@ -15,7 +15,7 @@ export const profile = {
   resumeUrl: "/resume.pdf",
   avatar: "/profile_photo.png",
   social: {
-    linkedin: "https://www.linkedin.com/in/subramanian-m-69413b309",
+    linkedin: "https://www.linkedin.com/in/subramanian-m-69413b309/?isSelfProfile=true",
     github: "https://github.com/Subramanian1805",
     facebook: "https://facebook.com",
     instagram: "https://instagram.com",
@@ -59,21 +59,27 @@ export const services = [
 
 export const projects = [
   {
-    title: "Ninaivugal AI",
-    desc: "AI enabled photo organization ",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1200&auto=format&fit=crop",
+    title: "HealthCare AI",
+    desc: "AI model which predicts the likelihood of a patient having a heart disease based on various health parameters.",
+    image: "/HealthCareAI1.png",
     stack: ["React", "Node.js", "MongoDB", "Tailwind"],
-    github: "https://github.com/subramanian-m/event-portal",
-    demo: "https://event-portal-demo.vercel.app",
+    github: "https://github.com/Subramanian1805/ML_Projects/tree/main/Heart_Disease_Prediction",
     size: "lg",
   },
   {
-    title: "AI Assistance",
-    desc: "A full-stack event management platform with live registration, ticketing, and analytics.",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1200&auto=format&fit=crop",
+    title: "DermaCare AI",
+    desc: "AI model which predicts the dieseases of skin based on the image of the skin provided by the user.",
+    image: "/DermaCareAI.png",
     stack: ["React", "Node.js", "MongoDB", "Tailwind"],
-    github: "https://github.com/subramanian-m/event-portal",
-    demo: "https://event-portal-demo.vercel.app",
+    github: "https://github.com/Subramanian1805/ML_Projects/tree/main/Heart_Disease_Prediction",
+    size: "lg",
+  },
+  {
+    title: "Stroke Prediction System",
+    desc: "AI model system to predict the Stroke risk based on various health parameters and lifestyle factors.",
+    image: "/StrokePredictionSystem.png",
+    stack: ["React", "Node.js", "MongoDB", "Tailwind"],
+    github: "https://github.com/Subramanian1805/ML_Projects/tree/main/Stroke_Prediction",
     size: "lg",
   }
 ];

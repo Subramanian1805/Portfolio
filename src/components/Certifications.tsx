@@ -155,7 +155,7 @@ export default function Certifications() {
       <div className="w-full relative marquee-container hover-pause py-6">
         <div className="marquee-content-left gap-6 px-3">
           {certifications.map((c, i) => (
-            <div key={`c1-${i}`} className="w-[340px] sm:w-[420px] shrink-0">
+            <div key={`c1-${i}`} className="w-[280px] sm:w-[380px] shrink-0">
               <div onClick={() => setActive(i)} className="glass-card overflow-hidden rounded-2xl border border-white/5 bg-[#0a0f2d]/30 cursor-pointer transition-all duration-300 aspect-[3/2] select-none hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)] hover:border-brand-blue/30 group">
                 <div className="relative w-full h-full shrink-0 overflow-hidden p-2">
                   <CertificateImage imgsrc={c.imgsrc} title={c.title} issuer={c.issuer} />
@@ -166,7 +166,7 @@ export default function Certifications() {
         </div>
         <div className="marquee-content-left gap-6 px-3" aria-hidden="true">
           {certifications.map((c, i) => (
-            <div key={`c2-${i}`} className="w-[340px] sm:w-[420px] shrink-0">
+            <div key={`c2-${i}`} className="w-[280px] sm:w-[380px] shrink-0">
               <div onClick={() => setActive(i)} className="glass-card overflow-hidden rounded-2xl border border-white/5 bg-[#0a0f2d]/30 cursor-pointer transition-all duration-300 aspect-[3/2] select-none hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)] hover:border-brand-blue/30 group">
                 <div className="relative w-full h-full shrink-0 overflow-hidden p-2">
                   <CertificateImage imgsrc={c.imgsrc} title={c.title} issuer={c.issuer} />

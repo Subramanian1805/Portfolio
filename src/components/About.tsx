@@ -238,7 +238,7 @@ Whether exploring large datasets, developing AI models, or building interactive 
               onMouseLeave={handleMouseLeave}
               onMouseEnter={handleMouseEnter}
               onClick={() => setIsFlipped(!isFlipped)}
-              className="relative w-[320px] h-[450px] cursor-pointer group animate-float-gentle"
+              className="relative w-full max-w-[320px] h-[430px] sm:h-[450px] cursor-pointer group animate-float-gentle"
               style={{ perspective: "1500px" }}
             >
               <motion.div

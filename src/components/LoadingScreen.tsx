@@ -12,8 +12,8 @@ interface LoadingScreenProps {
 
 export default function LoadingScreen({
   onComplete,
-  duration = 2800,
-  holdDuration = 700,
+  duration = 1600,
+  holdDuration = 200,
 }: LoadingScreenProps) {
   const textRef = useRef<SVGTextElement>(null);
   const [isFading, setIsFading] = useState(false);
@@ -38,8 +38,8 @@ export default function LoadingScreen({
       setStrokeOffset(0);
       const timer = setTimeout(() => {
         setIsFading(true);
-        setTimeout(onComplete, 800);
-      }, 400);
+        setTimeout(onComplete, 400);
+      }, 200);
       return () => clearTimeout(timer);
     }
 
@@ -88,8 +88,8 @@ export default function LoadingScreen({
       }
 
       // Smooth fill transition as drawing nears completion (without layout shift)
-      if (progress > 0.6) {
-        const normalizedFill = (progress - 0.6) / 0.4;
+      if (progress > 0.5) {
+        const normalizedFill = (progress - 0.5) / 0.5;
         setFillOpacity(Math.min(normalizedFill, 1));
       }
 
@@ -102,7 +102,7 @@ export default function LoadingScreen({
           setIsFading(true);
           setTimeout(() => {
             onComplete();
-          }, 900);
+          }, 400);
         }, holdDuration);
       }
     };
@@ -118,7 +118,7 @@ export default function LoadingScreen({
     <div
       aria-label="Loading portfolio, Subramanian"
       role="status"
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#050816] transition-opacity duration-900 ease-in-out select-none ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#050816] transition-opacity duration-400 ease-in-out select-none ${
         isFading ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >

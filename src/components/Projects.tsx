@@ -131,7 +131,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
               src={project.image}
               alt={project.title}
               loading="lazy"
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              className="h-full w-full object-contain bg-white/5 p-2 transition-transform duration-700 ease-out group-hover:scale-105"
             />
           )}
 
@@ -233,14 +233,14 @@ export default function Projects() {
         <div className="w-full relative marquee-container hover-pause py-4">
           <div className="marquee-content-left gap-6 px-3">
             {projects.map((p, index) => (
-              <div key={`p1-${index}`} className="w-[300px] sm:w-[340px] shrink-0">
+              <div key={`p1-${index}`} className="w-[280px] sm:w-[340px] shrink-0">
                 <ProjectCard project={p} index={index} />
               </div>
             ))}
           </div>
           <div className="marquee-content-left gap-6 px-3" aria-hidden="true">
             {projects.map((p, index) => (
-              <div key={`p2-${index}`} className="w-[300px] sm:w-[340px] shrink-0">
+              <div key={`p2-${index}`} className="w-[280px] sm:w-[340px] shrink-0">
                 <ProjectCard project={p} index={index} />
               </div>
             ))}
