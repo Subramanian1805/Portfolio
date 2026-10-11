@@ -1,29 +1,22 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Github, Linkedin, BadgeCheck, Download, ArrowRight } from "lucide-react";
+import { Phone, Mail, MapPin, Github, Linkedin, Download, ArrowRight } from "lucide-react";
 import { profile } from "@/data/portfolio";
 
-const decorCircles = [
-  { color: "bg-red-500/70", size: "h-4 w-4 sm:h-5 sm:w-5", pos: "top-4 left-1 sm:top-6 sm:left-2", delay: 0 },
-  { color: "bg-brand-green/70", size: "h-5 w-5 sm:h-7 sm:w-7", pos: "bottom-6 left-6 sm:bottom-10 sm:left-10", delay: 0.6 },
-  { color: "bg-yellow-400/70", size: "h-3 w-3 sm:h-4 sm:w-4", pos: "top-12 right-2 sm:top-16 sm:right-4", delay: 1.1 },
-  { color: "bg-brand-purple/70", size: "h-5 w-5 sm:h-6 sm:w-6", pos: "bottom-2 right-8 sm:bottom-4 sm:right-12", delay: 1.6 },
+const roles = [
+  "Data Scientist",
+  "Machine Learning Engineer",
+  "NLP Engineer",
+  "AI Developer"
 ];
 
 export default function Hero() {
-  const roles = [
-    "Data Scientist",
-    "Data Analyst",
-    "Machine Learning Engineer",
-    "Deep Learning Engineer"
-  ];
-  
   const [roleIndex, setRoleIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const fullText = roles[roleIndex];
@@ -50,7 +43,7 @@ export default function Hero() {
       }
     }
 
-    return () => clearTimeout(timer);
+    return () => clearInterval(timer);
   }, [currentText, isDeleting, roleIndex]);
 
   return (
@@ -59,7 +52,7 @@ export default function Hero() {
       className="relative min-h-screen flex items-center px-4 sm:px-8 md:px-12 lg:px-20 pt-28 sm:pt-32 pb-12 sm:pb-16 overflow-hidden"
     >
       <div className="mx-auto grid max-w-6xl grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-16 w-full">
-        {/* Right - Profile Box (Mobile first ordering for visual impact) */}
+        {/* Right - Profile Box with 3D Coin Rotation Effect */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -67,50 +60,44 @@ export default function Hero() {
           className="relative mx-auto flex h-[270px] w-[270px] sm:h-[350px] sm:w-[350px] md:h-[420px] md:w-[420px] items-center justify-center lg:order-last"
         >
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-brand-blue/30 via-brand-purple/20 to-brand-cyan/30 blur-3xl animate-pulse-glow" />
-          <div className="absolute inset-4 sm:inset-6 rounded-full border border-brand-cyan/30 animate-spin-slow" />
-          <div className="absolute inset-8 sm:inset-10 rounded-full border border-brand-blue/20" />
 
-          {/* Enlarge circular profile element with original full color photo */}
+          {/* 3D Rotating Coin Element */}
           <motion.div
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="relative h-[220px] w-[220px] sm:h-[280px] sm:w-[280px] md:h-[350px] md:w-[350px] rounded-full overflow-hidden border-2 border-brand-cyan/40 shadow-neon-cyan transition-all duration-500 cursor-pointer group"
-            style={{
-              boxShadow: isHovered
-                ? "0 0 35px rgba(56, 189, 248, 0.55), 0 0 70px rgba(139, 92, 246, 0.35)"
-                : "0 0 20px rgba(56, 189, 248, 0.2)",
-            }}
+            className="hero-3d-coin-stage"
           >
-            <div className="relative w-full h-full">
-              <img
-                src={profile.avatar}
-                alt={`${profile.name} profile photo`}
-                className="h-full w-full object-cover transition-transform duration-700 ease-out"
-                style={{
-                  transform: isHovered ? "scale(1.08)" : "scale(1)",
-                }}
-              />
+            <div className="hero-3d-coin" title="Continuous 3D Coin View • Hover to Pause">
+              {/* Front Coin Side (Heads) */}
+              <div className="hero-coin-side heads">
+                <Image
+                  src={profile.avatar}
+                  alt={`${profile.name} profile photo front`}
+                  width={300}
+                  height={300}
+                  className="hero-coin-img"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#070c22]/40 via-transparent to-transparent pointer-events-none" />
+              </div>
+
+              {/* Back Coin Side (Tails) */}
+              <div className="hero-coin-side tails">
+                <Image
+                  src={profile.avatar}
+                  alt={`${profile.name} profile photo back`}
+                  width={300}
+                  height={300}
+                  className="hero-coin-img"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#070c22]/40 via-transparent to-transparent pointer-events-none" />
+              </div>
             </div>
           </motion.div>
-
-          {decorCircles.map((c, i) => (
-            <motion.span
-              key={i}
-              animate={{ y: [0, -8, 0], x: [0, 5, 0] }}
-              transition={{
-                duration: 4 + i,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: c.delay,
-              }}
-              className={`absolute rounded-full ${c.color} ${c.size} ${c.pos} blur-[1px] shadow-lg`}
-            />
-          ))}
         </motion.div>
 
-        {/* Left */}
+        {/* Left - Context & Bio */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -121,7 +108,6 @@ export default function Hero() {
 
           <h1 className="mt-3 font-display text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight flex items-center justify-center lg:justify-start flex-wrap gap-2 sm:gap-3">
             <span className="gradient-text">{profile.name}</span>
-            <BadgeCheck className="text-brand-cyan h-7 w-7 sm:h-8 sm:w-8 lg:h-9 lg:w-9 shrink-0" />
           </h1>
 
           {/* Typewriter text animation */}
@@ -134,7 +120,7 @@ export default function Hero() {
           </div>
 
           <p className="mt-4 sm:mt-6 max-w-md text-sm sm:text-base text-ink-secondary leading-relaxed">
-            I design and build intelligent, data-driven solutions — from collecting and analyzing data to deploying scalable machine learning models.
+            I design and build intelligent, data-driven solutions - from collecting and processing data to deploying scalable machine learning models.
           </p>
 
           <div className="mt-6 sm:mt-8 space-y-2.5 sm:space-y-3 w-full max-w-xs lg:max-w-none">
@@ -170,16 +156,16 @@ export default function Hero() {
           {/* Social icons */}
           <div className="mt-7 sm:mt-8 flex items-center justify-center lg:justify-start flex-wrap gap-3 sm:gap-4 relative z-20">
             {[
-              { name: "LinkedIn", key: "linkedin", icon: Linkedin, href: profile.social.linkedin },
-              { name: "GitHub", key: "github", icon: Github, href: profile.social.github },
-              { name: "Email", key: "email", icon: Mail, href: profile.social.email },
-            ].map(({ name, key, icon: Icon, href }) => (
+              { name: "LinkedIn", key: "linkedin", icon: Linkedin, href: profile.social.linkedin, isExternal: true },
+              { name: "GitHub", key: "github", icon: Github, href: profile.social.github, isExternal: true },
+              { name: "Email", key: "email", icon: Mail, href: profile.social.email, isExternal: false },
+            ].map(({ name, key, icon: Icon, href, isExternal }) => (
               <div key={key} className={`social-icon-wrapper ${key}`}>
                 <span className="social-icon-tooltip">{name}</span>
                 <a
                   href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
                   className="social-icon-btn"
                   aria-label={`Visit my ${name}`}
                 >

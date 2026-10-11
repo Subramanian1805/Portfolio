@@ -1,75 +1,92 @@
-# Subramanian M — Portfolio
+# Subramanian M — Data Science & Machine Learning Portfolio
 
-A premium, dark, glassmorphic developer portfolio built with **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.
+A production-grade, MNC-ready developer portfolio built with **Next.js 14 (App Router)**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.
 
-## Stack
+Designed and engineered with strict focus on WCAG 2.2 AA accessibility, Core Web Vitals, and Server Component architecture.
 
-- Next.js 15 + React 18 + TypeScript
-- Tailwind CSS (custom design tokens for the dark/neon palette)
-- Framer Motion (scroll reveals, page-load sequence, micro-interactions)
-- Lucide React (icons)
-- Canvas-based particle + cursor-glow background
+---
 
-## Getting started
+## Technical Stack & Architecture
+
+- **Framework**: Next.js 14 (App Router, Server Components)
+- **Language**: TypeScript (`strict: true`)
+- **Styling**: Tailwind CSS with custom neon/glassmorphic design tokens
+- **Animations**: Framer Motion & HTML5 Canvas particle engine with reduced-motion support
+- **Icons**: Lucide React, React Icons (`si`)
+- **SEO & Accessibility**: Next.js `robots.ts`, `sitemap.ts`, OpenGraph metadata, ARIA landmarks, WCAG 2.2 AA compliant contrast
+
+---
+
+## Project Structure
+
+```text
+Portfolio/
+├── public/                     # Resume, PDF certifications, SVG badges, images
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx          # Fonts, OpenGraph metadata, skip link
+│   │   ├── page.tsx            # Server Component assembling section hierarchy
+│   │   ├── robots.ts           # Robots.txt generator
+│   │   ├── sitemap.ts          # Sitemap.xml generator
+│   │   └── globals.css         # Glassmorphism & custom utility classes
+│   ├── components/             # Section components (Hero, Experience, Projects, Skills, About, etc.)
+│   └── data/
+│       └── portfolio.ts        # Authoritative single-source-of-truth portfolio data
+├── next.config.js              # Strict remotePatterns image security
+├── tsconfig.json               # Strict TypeScript configuration
+└── README.md
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm / yarn / pnpm
+
+### Installation
 
 ```bash
 npm install
+```
+
+### Development Server
+
+```bash
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-## Project structure
+---
 
-```
-src/
-  app/
-    layout.tsx       # fonts, SEO metadata, root shell
-    page.tsx          # assembles all sections
-    globals.css       # glassmorphism + neon utility classes
-  components/          # one component per section (Hero, About, Projects, ...)
-  data/
-    portfolio.ts       # ALL content lives here — edit this file to update copy
-  lib/
-    utils.ts           # `cn()` class merge helper
-```
+## Quality & Verification
 
-## Editing content
-
-Everything visible on the page — name, roles, projects, skills, achievements,
-products, badges, experience, certifications, education, blog posts, and
-contact info — is sourced from **`src/data/portfolio.ts`**. Update that file
-and every section re-renders automatically; you shouldn't need to touch the
-component files for routine content edits.
-
-## Swapping in real assets
-
-- Replace the Unsplash URLs in `portfolio.ts` (profile photo, project images,
-  blog images) with your own hosted images, or drop files into `/public` and
-  reference them as `/your-file.jpg`.
-- Add a real `resume.pdf` to `/public` (the hero's "View Resume" button
-  points at `/resume.pdf`).
-- Wire the contact form in `src/components/Contact.tsx` to a real endpoint
-  (e.g. Formspree, Resend, or an API route) — it currently simulates a send.
-- The GitHub stats in `GithubStats.tsx` are static sample numbers; swap in a
-  live GitHub API call if you want real-time data.
-
-## Notes
-
-- A literal Three.js WebGL scene was intentionally left out of this pass in
-  favor of a lightweight, dependency-light canvas particle system + ambient
-  cursor glow, which gives the same depth without the bundle-size and
-  performance cost. `three`, `@react-three/fiber`, and `@react-three/drei`
-  are already included in `package.json` if you want to add a 3D hero scene
-  later.
-- `prefers-reduced-motion` is respected globally.
-- Build was verified locally with `next build` — production build is clean.
-
-## Deploying
-
-Works out of the box on Vercel:
+Run strict typechecking and production build verification:
 
 ```bash
-npm i -g vercel
-vercel
+# Run TypeScript type check (0 errors)
+npx tsc --noEmit
+
+# Run ESLint check
+npm run lint
+
+# Build production bundle
+npm run build
 ```
+
+---
+
+## Deployment
+
+Deploy seamlessly to [Vercel](https://vercel.com):
+
+```bash
+npx vercel
+```
+
+---
+
+© 2026 Subramanian M. All Rights Reserved.

@@ -39,9 +39,20 @@ export default function ParticleBackground() {
       hue: colors[Math.floor(Math.random() * colors.length)],
     }));
 
-    let raf: number;
+    let raf: number = 0;
+    let isPageVisible = !document.hidden;
+
+    function handleVisibilityChange() {
+      isPageVisible = !document.hidden;
+      if (isPageVisible && !prefersReducedMotion) {
+        cancelAnimationFrame(raf);
+        draw();
+      }
+    }
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     function draw() {
-      if (!ctx) return;
+      if (!ctx || !isPageVisible) return;
       ctx.clearRect(0, 0, width, height);
       for (const p of particles) {
         p.x += p.vx;
@@ -79,24 +90,32 @@ export default function ParticleBackground() {
     }
     window.addEventListener("resize", onResize);
 
+    let rafGlow: number;
     function onMove(e: MouseEvent) {
       if (glowRef.current) {
-        glowRef.current.style.transform = `translate(${e.clientX - 200}px, ${
-          e.clientY - 200
-        }px)`;
+        cancelAnimationFrame(rafGlow);
+        rafGlow = requestAnimationFrame(() => {
+          if (glowRef.current) {
+            glowRef.current.style.transform = `translate(${e.clientX - 200}px, ${
+              e.clientY - 200
+            }px)`;
+          }
+        });
       }
     }
     window.addEventListener("mousemove", onMove);
 
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(rafGlow);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("mousemove", onMove);
     };
   }, []);
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-bg-primary">
+    <div aria-hidden="true" className="fixed inset-0 -z-10 overflow-hidden bg-bg-primary">
       <div className="absolute inset-0 bg-grid-glow" />
       <div
         ref={glowRef}

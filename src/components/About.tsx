@@ -1,9 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Briefcase, FolderGit2, Users2, ShieldCheck, ArrowRight, Mail, MapPin, Github, Linkedin, Facebook, Instagram, Twitter } from "lucide-react";
-import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiPython, SiNodedotjs } from "react-icons/si";
+import { Briefcase, FolderGit2, ShieldCheck, ArrowRight, Mail, Github, Linkedin, GraduationCap, Award, Code2 } from "lucide-react";
 import { profile } from "@/data/portfolio";
 
 function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -25,7 +25,7 @@ function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
       setCount(start);
       if (start >= end) {
         clearInterval(timer);
-        setCount(end); // Ensure exact final value
+        setCount(end);
       }
     }, stepTime);
 
@@ -40,136 +40,80 @@ function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
   );
 }
 
-// Vector-crisp drawing of a high-tech microprocessor chip
-const MicrochipSvg = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="25" y="25" width="50" height="50" rx="6" fill="#070a1e" stroke="currentColor" strokeWidth="4.5" />
-    <rect x="35" y="35" width="30" height="30" rx="3" stroke="currentColor" strokeWidth="2.5" fill="none" opacity="0.75" />
-    <circle cx="50" cy="50" r="5.5" fill="currentColor" />
-    
-    {/* Connector pins */}
-    <line x1="10" y1="35" x2="25" y2="35" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <line x1="10" y1="50" x2="25" y2="50" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <line x1="10" y1="65" x2="25" y2="65" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    
-    <line x1="75" y1="35" x2="90" y2="35" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <line x1="75" y1="50" x2="90" y2="50" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <line x1="75" y1="65" x2="90" y2="65" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    
-    <line x1="35" y1="10" x2="35" y2="25" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <line x1="50" y1="10" x2="50" y2="25" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <line x1="65" y1="10" x2="65" y2="25" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    
-    <line x1="35" y1="75" x2="35" y2="90" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <line x1="50" y1="75" x2="50" y2="90" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-    <line x1="65" y1="75" x2="65" y2="90" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+const HexagonLogoSvg = ({ className = "w-6 h-6 text-[#38bdf8]" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+    <circle cx="12" cy="12" r="3" fill="currentColor" />
   </svg>
 );
 
-// High-fidelity dynamic vector QR code drawing
-const QrCodeSvg = ({ size = 60, className = "" }: { size?: number; className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} width={size} height={size}>
-    {/* Outer corner alignment blocks */}
-    <rect x="0" y="0" width="24" height="24" stroke="currentColor" strokeWidth="6.5" fill="none" rx="2.5" />
-    <rect x="6" y="6" width="12" height="12" fill="currentColor" rx="1" />
-    
-    <rect x="76" y="0" width="24" height="24" stroke="currentColor" strokeWidth="6.5" fill="none" rx="2.5" />
-    <rect x="82" y="6" width="12" height="12" fill="currentColor" rx="1" />
-    
-    <rect x="0" y="76" width="24" height="24" stroke="currentColor" strokeWidth="6.5" fill="none" rx="2.5" />
-    <rect x="6" y="82" width="12" height="12" fill="currentColor" rx="1" />
-    
-    {/* Complex matrix of modules */}
-    <rect x="36" y="0" width="10" height="10" fill="currentColor" rx="1" />
-    <rect x="56" y="4" width="10" height="10" fill="currentColor" rx="1" />
-    <rect x="42" y="20" width="14" height="8" fill="currentColor" rx="1" />
-    
-    <rect x="0" y="36" width="10" height="10" fill="currentColor" rx="1" />
-    <rect x="14" y="44" width="12" height="12" fill="currentColor" rx="1" />
-    <rect x="0" y="62" width="8" height="8" fill="currentColor" rx="1" />
-    
-    <rect x="76" y="36" width="12" height="8" fill="currentColor" rx="1" />
-    <rect x="84" y="48" width="16" height="16" fill="currentColor" rx="1" />
-    <rect x="76" y="68" width="10" height="8" fill="currentColor" rx="1" />
-    
-    <rect x="36" y="76" width="14" height="12" fill="currentColor" rx="1" />
-    <rect x="56" y="84" width="12" height="16" fill="currentColor" rx="1" />
-    <rect x="44" y="62" width="10" height="10" fill="currentColor" rx="1" />
-    
-    {/* Center dot grid */}
-    <rect x="42" y="42" width="16" height="16" fill="currentColor" rx="2" opacity="0.9" />
+const ChevronLogoSvg = ({ className = "w-5 h-5 text-[#38bdf8]" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 5l6 7-6 7" />
+    <path d="M12 5l6 7-6 7" />
+  </svg>
+);
+
+const BarcodeSvg = () => (
+  <svg viewBox="0 0 180 34" className="w-36 h-7 text-[#f8fafc]">
+    <rect x="0" y="0" width="3" height="30" fill="currentColor" />
+    <rect x="5" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="9" y="0" width="4.5" height="30" fill="currentColor" />
+    <rect x="16" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="20" y="0" width="3" height="30" fill="currentColor" />
+    <rect x="25" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="29" y="0" width="4.5" height="30" fill="currentColor" />
+    <rect x="36" y="0" width="3" height="30" fill="currentColor" />
+    <rect x="42" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="46" y="0" width="4.5" height="30" fill="currentColor" />
+    <rect x="53" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="57" y="0" width="3" height="30" fill="currentColor" />
+    <rect x="63" y="0" width="4.5" height="30" fill="currentColor" />
+    <rect x="70" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="74" y="0" width="3" height="30" fill="currentColor" />
+    <rect x="80" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="84" y="0" width="4.5" height="30" fill="currentColor" />
+    <rect x="91" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="95" y="0" width="3" height="30" fill="currentColor" />
+    <rect x="101" y="0" width="4.5" height="30" fill="currentColor" />
+    <rect x="108" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="112" y="0" width="3" height="30" fill="currentColor" />
+    <rect x="118" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="122" y="0" width="4.5" height="30" fill="currentColor" />
+    <rect x="129" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="133" y="0" width="3" height="30" fill="currentColor" />
+    <rect x="139" y="0" width="4.5" height="30" fill="currentColor" />
+    <rect x="146" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="150" y="0" width="3" height="30" fill="currentColor" />
+    <rect x="156" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="160" y="0" width="4.5" height="30" fill="currentColor" />
+    <rect x="167" y="0" width="1.5" height="30" fill="currentColor" />
+    <rect x="171" y="0" width="3" height="30" fill="currentColor" />
+    <rect x="176" y="0" width="4" height="30" fill="currentColor" />
   </svg>
 );
 
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-
   const [isFlipped, setIsFlipped] = useState(false);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-  const [glowX, setGlowX] = useState(50);
-  const [glowY, setGlowY] = useState(50);
-  
+
   const stats = [
-    { label: "Internship Experience", value: 2, suffix: "+", icon: Briefcase, color: "text-brand-blue" },
-    { label: "Projects Completed", value: 5, suffix: "+", icon: FolderGit2, color: "text-brand-purple" },
-    { label: "Certifications", value: 15, suffix: "+", icon: ShieldCheck, color: "text-brand-green" },
+    { label: "Internships", value: 2, suffix: "", icon: Briefcase, color: "text-brand-blue" },
+    { label: "ML Flagships", value: 3, suffix: "", icon: FolderGit2, color: "text-brand-purple" },
+    { label: "Certifications", value: 6, suffix: "+", icon: ShieldCheck, color: "text-brand-green" },
   ];
-
-  const techStack = [
-    { icon: SiReact, name: "React", color: "text-[#61DAFB]" },
-    { icon: SiNextdotjs, name: "Next.js", color: "text-white" },
-    { icon: SiTypescript, name: "TypeScript", color: "text-[#3178C6]" },
-    { icon: SiTailwindcss, name: "Tailwind", color: "text-[#38BDF8]" },
-    { icon: SiPython, name: "Python", color: "text-[#3776AB]" },
-    { icon: SiNodedotjs, name: "Node.js", color: "text-[#339933]" },
-  ];
-
-  // Cursor tracker calculation for smooth 3D pass tilts
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = cardRef.current;
-    if (!card) return;
-    
-    const rect = card.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left - width / 2;
-    const mouseY = e.clientY - rect.top - height / 2;
-
-    // Elegant soft tilt - restricted to 12 degrees max
-    const rX = -(mouseY / height) * 12;
-    const rY = (mouseX / width) * 12;
-    
-    setRotateX(rX);
-    setRotateY(rY);
-
-    // Coordinate mapping for sweep reflection
-    const gX = ((e.clientX - rect.left) / width) * 100;
-    const gY = ((e.clientY - rect.top) / height) * 100;
-    setGlowX(gX);
-    setGlowY(gY);
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-    setIsFlipped(false);
-  };
-
-  const handleMouseEnter = () => {
-    setIsFlipped(true);
-  };
 
   return (
-    <section id="about" className="section-padding bg-[#050816]/10 relative overflow-hidden" ref={containerRef}>
-      {/* Background radial glow */}
+    <section
+      id="about"
+      className="relative px-6 md:px-12 lg:px-20 pt-24 pb-20 md:pt-28 md:pb-24 bg-[#050816]/10 overflow-hidden"
+      ref={containerRef}
+    >
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[450px] h-[450px] bg-brand-purple/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="mx-auto max-w-6xl relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div className="mx-auto max-w-6xl w-full relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           
-          {/* Left Column - Context, Bio & Counters */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -183,13 +127,13 @@ export default function About() {
               <span className="gradient-text">Actionable Intelligence</span>
             </h2>
             <p className="mt-6 text-ink-secondary text-base md:text-lg leading-relaxed max-w-2xl">
-Hello! I'm a Computer Science graduate and aspiring Data Scientist from India who enjoys uncovering patterns, building predictive models, and transforming data into meaningful insights. My work focuses on machine learning, deep learning, data analytics, and visualization, with the goal of creating solutions that are both intelligent and practical.
+              Hello! I&apos;m a B.E. Computer Science Engineering student at Dhaanish Ahmed College of Engineering (graduating 2027) with an 8.4 CGPA. I specialize in Data Science, Machine Learning, and NLP Engineering.
             </p>
             <p className="mt-4 text-ink-secondary text-sm md:text-base leading-relaxed max-w-2xl">
-Whether exploring large datasets, developing AI models, or building interactive dashboards, I'm driven by curiosity, continuous learning, and a passion for solving real-world problems through data. I strive to create scalable, efficient, and impactful solutions that help organizations make smarter decisions.            </p>
+              My engineering focus centers on clean dataset preprocessing, model evaluation (Scikit-learn, XGBoost, PyTorch, TensorFlow), and building production REST APIs with FastAPI and Flask. I strive to create scalable, reproducible ML pipelines that drive real-world business value.
+            </p>
 
-            {/* Premium SaaS style stats counter row */}
-            <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6">
+            <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6">
               {stats.map((stat, i) => {
                 const Icon = stat.icon;
                 return (
@@ -216,7 +160,6 @@ Whether exploring large datasets, developing AI models, or building interactive 
               })}
             </div>
 
-            {/* Let's Connect CTA Button */}
             <div className="mt-10">
               <motion.a
                 href="#contact"
@@ -230,193 +173,308 @@ Whether exploring large datasets, developing AI models, or building interactive 
             </div>
           </motion.div>
 
-          {/* Right Column - Premium 3D Developer Pass Card */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-            <motion.div
-              ref={cardRef}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              onMouseEnter={handleMouseEnter}
+            {/* Lanyard Strap & Clip Assembly */}
+            <div className="id-lanyard-assembly pointer-events-none select-none">
+              <div className="id-lanyard-strap" />
+              <div className="id-lanyard-clip">
+                <div className="id-lanyard-metal-top" />
+                <div className="id-lanyard-rivet-group">
+                  <span className="id-lanyard-rivet" />
+                  <span className="id-lanyard-rivet" />
+                </div>
+                <div className="id-lanyard-clasp-loop" />
+              </div>
+            </div>
+
+            <div
+              className="ticket-container cursor-pointer select-none"
+              tabIndex={0}
               onClick={() => setIsFlipped(!isFlipped)}
-              className="relative w-full max-w-[320px] h-[430px] sm:h-[450px] cursor-pointer group animate-float-gentle"
-              style={{ perspective: "1500px" }}
+              aria-label="Interactive Employee ID Card - Click to flip"
             >
-              <motion.div
-                animate={{
-                  rotateX: rotateX,
-                  rotateY: isFlipped ? 180 - rotateY : rotateY, // mathematically compensates tilt direction on flip
-                }}
-                transition={{ type: "spring", stiffness: 220, damping: 24 }}
-                style={{ transformStyle: "preserve-3d" }}
-                className="w-full h-full relative animate-float-gentle"
-              >
-                {/* 3D FRONT SIDE */}
-                <div
-                  style={{ backfaceVisibility: "hidden" }}
-                  className="absolute inset-0 w-full h-full dev-pass-glow-outline"
-                >
-                  <div className="dev-pass-cover-front">
-                    {/* Skewed light sweep reflection */}
-                    <div className="reflex" />
-                    {/* Noise texture overlay */}
-                    <div className="noise-overlay" />
-                    {/* Dynamic reflection point overlay */}
-                    <div 
-                      className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-10"
-                      style={{
-                        background: `radial-gradient(circle 120px at ${glowX}% ${glowY}%, rgba(255,255,255,0.08) 0%, transparent 100%)`,
-                      }}
-                    />
+              <div className="interaction-grid">
+                {Array.from({ length: 10 }).map((_, r) =>
+                  Array.from({ length: 10 }).map((_, c) => (
+                    <div key={`cell-${r + 1}-${c + 1}`} className={`grid-cell cell-${r + 1}-${c + 1}`} />
+                  ))
+                )}
+              </div>
 
-                    {/* Header */}
-                    <div className="flex items-center justify-between border-b border-white/10 pb-4 relative z-10 w-full">
-                      <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] tracking-[0.3em] text-brand-cyan/60 uppercase">IDENTITY PASS</span>
-                        <h4 className="font-display text-sm font-bold text-white tracking-widest mt-0.5">DEV // ACCESS</h4>
-                      </div>
-                      <MicrochipSvg className="dev-pass-chip-svg" />
+              <div className={`ticket-flipper ${isFlipped ? "flipped" : ""}`}>
+                {/* ID CARD FRONT FACE: STATE 1 (COVER) + STATE 2 (CORPORATE ID) */}
+                <div className="ticket-card id-card-face id-card-front">
+                  <div className="id-card-punch-hole" />
+
+                  {/* -----------------------------------------------------------------
+                      STATE 1: BEFORE HOVER - PORTRAIT ACCESS PASS COVER
+                      Prominently showcases Subramanian's portrait photo before hovering
+                      ----------------------------------------------------------------- */}
+                  <div className="id-card-cover-layer">
+                    <div className="id-cover-bg-image-container">
+                      <Image
+                        src={profile.avatar}
+                        alt={profile.name}
+                        fill
+                        sizes="320px"
+                        priority
+                        className="object-cover object-top id-cover-photo"
+                      />
+                      <div className="id-cover-gradient-scrim" />
                     </div>
 
-                    {/* Body */}
-                    <div className="flex flex-col items-center text-center mt-6 w-full relative z-10 flex-1 justify-center gap-4">
-                      {/* Avatar circular frame with glowing neon boundary */}
-                      <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-brand-cyan/40 shadow-[0_0_20px_rgba(56,189,248,0.35)]">
-                        <img
-                          src={profile.avatar}
-                          alt={profile.name}
-                          className="h-full w-full object-cover select-none"
-                        />
+                    <div className="id-cover-header">
+                      <div className="flex items-center gap-2">
+                        <HexagonLogoSvg className="w-4 h-4 text-[#38bdf8]" />
+                        <span className="text-[10px] font-mono tracking-widest text-slate-200 uppercase font-bold">
+                          IDENTITY PASS
+                        </span>
                       </div>
+                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/40 backdrop-blur-sm">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="text-[9px] font-mono font-bold text-emerald-400 tracking-wider">ACTIVE</span>
+                      </div>
+                    </div>
 
-                      <div className="flex flex-col items-center">
-                        <h3 className="font-display text-xl font-bold text-white tracking-tight leading-snug">
-                          {profile.name}
+                    <div className="id-cover-footer">
+                      <div className="flex flex-col">
+                        <span className="text-[9.5px] font-mono tracking-widest text-[#38bdf8] uppercase font-bold">
+                          CANDIDATE ID • 2027
+                        </span>
+                        <h3 className="font-display font-extrabold text-xl text-white tracking-wide mt-0.5">
+                          SUBRAMANIAN <span className="text-[#38bdf8]">M</span>
                         </h3>
-                        <span className="font-mono text-[10px] tracking-[0.18em] text-brand-cyan uppercase mt-1">
-                          Data Scientist & AI Enthusiast
+                        <p className="font-mono text-[10px] text-slate-300 tracking-wider uppercase mt-1">
+                          DATA SCIENTIST & ML ENGINEER
+                        </p>
+                      </div>
+
+                      <div className="mt-3 py-1.5 px-3 rounded-lg bg-black/55 border border-white/10 backdrop-blur-md flex items-center justify-between">
+                        <span className="text-[9px] font-mono text-cyan-300 font-semibold tracking-wide flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                          HOVER TO SCAN ID
                         </span>
+                        <span className="text-[9px] font-mono text-slate-400 font-medium">CLICK TO FLIP ↻</span>
                       </div>
+                    </div>
+                  </div>
 
-                      {/* Credentials Grid */}
-                      <div className="grid grid-cols-2 gap-x-6 gap-y-2 mt-2 text-left font-mono text-[10px] text-ink-secondary border-t border-b border-white/5 py-3 w-full">
-                        <div className="flex items-center gap-1.5">
-                          <MapPin size={11} className="text-brand-purple" />
-                          <span>India</span>
+                  {/* -----------------------------------------------------------------
+                      STATE 2: WHILE HOVER - CORPORATE ID CARD
+                      Recreated matching reference image media_1791738491486_0f119002.jpg
+                      with diagonal royal blue/cyan geometric stripes & clean details
+                      ----------------------------------------------------------------- */}
+                  <div className="id-card-revealed-content">
+                    {/* Top Carbon Striped Header */}
+                    <div className="id-header-corporate">
+                      <div className="flex items-center gap-2.5">
+                        <div className="id-corp-logo-mark">
+                          <ChevronLogoSvg className="w-6 h-5 text-[#38bdf8]" />
                         </div>
-                        
+                        <div className="flex flex-col text-left">
+                          <span className="font-display font-black text-xs text-white tracking-widest leading-tight">
+                            SUBRAMANIAN <span className="text-[#38bdf8]">M</span>
+                          </span>
+                          <span className="font-mono text-[7.5px] text-slate-400 tracking-wider uppercase mt-0.5">
+                            AI & DATA SCIENCE ENGINEER
+                          </span>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Footer */}
-                    <div className="flex items-center justify-between pt-4 border-t border-white/10 relative z-10 w-full mt-auto">
-                      <div className="flex flex-col text-left font-mono text-[9px] text-brand-cyan/50 tracking-wider">
-                        <span>DEV IDENTITY</span>
-                        <span className="text-white font-semibold text-[10px] mt-0.5 select-all">#DEV-8490-SM</span>
-                      </div>
-                      
-                      {/* Mini QR SVG */}
-                      <div className="p-1 bg-white/5 border border-white/10 rounded-lg">
-                        <QrCodeSvg size={28} className="text-white/60" />
+                    {/* Diagonal Geometric Stripes Section */}
+                    <div className="id-diagonal-stripes-banner">
+                      <svg className="id-diagonal-stripes-svg" viewBox="0 0 320 115" preserveAspectRatio="none">
+                        <polygon points="0,0 320,0 320,68 0,26" fill="#080e2b" />
+                        <polygon points="0,26 320,68 320,92 0,50" fill="#2563eb" />
+                        <polygon points="0,50 320,92 320,102 0,60" fill="#38bdf8" />
+                        <polygon points="0,60 320,102 320,106 0,64" fill="#93c5fd" opacity="0.9" />
+                      </svg>
+
+                      {/* Circular Avatar intersecting diagonal stripes */}
+                      <div className="id-avatar-circle-wrapper">
+                        <div className="id-avatar-circle-frame">
+                          <Image
+                            src={profile.avatar}
+                            alt={profile.name}
+                            width={94}
+                            height={94}
+                            priority
+                            className="id-avatar-circle-img select-none"
+                            style={{ objectPosition: "50% 10%" }}
+                          />
+                          <div className="id-avatar-status-beacon" title="Available for Internships & MNC Roles" />
+                        </div>
                       </div>
                     </div>
 
+                    {/* Employee ID Details Section */}
+                    <div className="id-card-details-section">
+                      <div className="text-center mt-0.5">
+                        <h3 className="id-corp-name">
+                          SUBRAMANIAN <span>M</span>
+                        </h3>
+                        <p className="id-corp-role">DATA SCIENTIST & ML ENGINEER</p>
+                      </div>
+
+                      <div className="id-corp-table">
+                        <div className="id-corp-row">
+                          <span className="id-corp-key">ID</span>
+                          <span className="id-corp-sep">:</span>
+                          <span className="id-corp-val">2023-CSE-84</span>
+                        </div>
+                        <div className="id-corp-row">
+                          <span className="id-corp-key">Degree</span>
+                          <span className="id-corp-sep">:</span>
+                          <span className="id-corp-val">B.E. Computer Science</span>
+                        </div>
+                        <div className="id-corp-row">
+                          <span className="id-corp-key">College</span>
+                          <span className="id-corp-sep">:</span>
+                          <span className="id-corp-val">Dhaanish Ahmed College of Engineering</span>
+                        </div>
+                        <div className="id-corp-row">
+                          <span className="id-corp-key">CGPA</span>
+                          <span className="id-corp-sep">:</span>
+                          <span className="id-corp-val">8.4 / 10.0</span>
+                        </div>
+                        <div className="id-corp-row">
+                          <span className="id-corp-key">Phone</span>
+                          <span className="id-corp-sep">:</span>
+                          <span className="id-corp-val">+91 63795 53156</span>
+                        </div>
+                        <div className="id-corp-row">
+                          <span className="id-corp-key">E-mail</span>
+                          <span className="id-corp-sep">:</span>
+                          <span className="id-corp-val text-[9.5px]">marisubramanian01@gmail.com</span>
+                        </div>
+                      </div>
+
+                      <div className="id-corp-bottom-bar">
+                        <div className="id-barcode-container">
+                          <BarcodeSvg />
+                          <span className="id-barcode-label">SUBRAMANIAN M • CSE 2027 • VERIFIED ID</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* 3D BACK SIDE */}
-                <div
-                  style={{
-                    backfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
-                  }}
-                  className="absolute inset-0 w-full h-full dev-pass-glow-outline"
-                >
-                  <div className="dev-pass-cover-back">
-                    {/* Skewed light sweep reflection */}
-                    <div className="reflex" />
-                    {/* Noise texture overlay */}
-                    <div className="noise-overlay" />
-                    {/* Dynamic reflection point overlay */}
-                    <div 
-                      className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-10"
-                      style={{
-                        background: `radial-gradient(circle 120px at ${glowX}% ${glowY}%, rgba(255,255,255,0.08) 0%, transparent 100%)`,
-                      }}
-                    />
+                {/* -----------------------------------------------------------------
+                    STATE 3: AFTER CLICKING - ID CARD BACK FACE
+                    Exact user-requested layout, text, holographic emblem & signature
+                    ----------------------------------------------------------------- */}
+                <div className="ticket-card ticket-card-back id-card-face id-card-back">
+                  <div className="id-card-punch-hole" />
 
-                    {/* Header */}
-                    <div className="flex items-center justify-between border-b border-white/10 pb-4 relative z-10 w-full">
-                      <div className="flex flex-col text-left">
-                        <span className="font-mono text-[8px] tracking-[0.3em] text-brand-purple/60 uppercase">PASS STATUS</span>
-                        <h4 className="font-display text-xs font-bold text-brand-green tracking-widest mt-0.5 flex items-center gap-1.5">
-                          <span className="h-1.5 w-1.5 rounded-full bg-brand-green animate-pulse" /> ACTIVE ACCESS
-                        </h4>
-                      </div>
-                      <MicrochipSvg className="dev-pass-chip-svg" />
+                  <div className="flex items-center justify-between border-b border-slate-700/60 pb-2 w-full relative z-10 pt-2 shrink-0">
+                    <div className="flex items-center gap-2">
+                      <HexagonLogoSvg className="w-5 h-5 text-[#38bdf8]" />
+                      <span className="font-display font-extrabold text-xs text-white tracking-wider">
+                        PORTFOLIO <span className="text-[#38bdf8]">CARD</span>
+                      </span>
                     </div>
-
-                    {/* Body */}
-                    <div className="flex flex-col items-center justify-between mt-5 w-full relative z-10 flex-1">
-                      {/* Tech badges grid */}
-                      <div className="w-full">
-                        <span className="font-mono text-[9px] text-brand-cyan tracking-wider uppercase block text-left mb-2.5">
-                          CORE TECH STACK
-                        </span>
-                        <div className="grid grid-cols-3 gap-2 w-full">
-                          {techStack.map((tech) => {
-                            const Icon = tech.icon;
-                            return (
-                              <div
-                                key={tech.name}
-                                className="flex flex-col items-center justify-center p-2 rounded-xl bg-white/5 border border-white/5 text-[9px] font-mono text-ink-secondary hover:text-white hover:border-white/10 hover:bg-white/10 transition-all duration-300"
-                              >
-                                <Icon size={16} className={`${tech.color} mb-1`} />
-                                <span>{tech.name}</span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-
-                      {/* Large Scanning QR code overlay */}
-                      <div className="flex items-center justify-center relative w-28 h-28 p-2 bg-[#050816]/70 border border-white/10 rounded-xl overflow-hidden shadow-inner mt-4">
-                        <QrCodeSvg size={90} className="text-brand-cyan/80" />
-                        <div className="qr-scanner-line" />
-                      </div>
-                    </div>
-
-                    {/* Footer - Social Connections tooltips */}
-                    <div className="flex items-center justify-center gap-2 pt-4 border-t border-white/10 relative z-20 w-full mt-auto" onClick={(e) => e.stopPropagation()}>
-                      {[
-                        { name: "LinkedIn", key: "linkedin", icon: Linkedin, href: profile.social.linkedin },
-                        { name: "GitHub", key: "github", icon: Github, href: profile.social.github },
-                        { name: "Facebook", key: "facebook", icon: Facebook, href: profile.social.facebook },
-                        { name: "Instagram", key: "instagram", icon: Instagram, href: profile.social.instagram },
-                        { name: "Twitter/X", key: "twitter", icon: Twitter, href: profile.social.twitter },
-                        { name: "Email", key: "email", icon: Mail, href: profile.social.email },
-                      ].map(({ name, key, icon: Icon, href }) => (
-                        <div key={key} className={`social-icon-wrapper ${key}`}>
-                          <span className="social-icon-tooltip">{name}</span>
-                          <a
-                            href={href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="social-icon-btn h-8 w-8"
-                            aria-label={`Visit my ${name}`}
-                          >
-                            <Icon size={14} />
-                          </a>
-                        </div>
-                      ))}
-                    </div>
-
+                    <span className="font-mono text-[9px] text-[#38bdf8] font-bold tracking-wider uppercase">
+                      VERIFIED CANDIDATE
+                    </span>
                   </div>
-                </div>
 
-              </motion.div>
-            </motion.div>
-            
-            {/* Ambient ground pass shadow glow */}
+                  {/* Centered Holographic SM Emblem - Lowered & aligned at the center between top section and core technical focus */}
+                  <div className="flex-1 flex items-center justify-center my-auto py-1">
+                    <div className="holographic-emblem">
+                      <div className="emblem-logo">SM</div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2 text-left w-full relative z-10 shrink-0">
+                    <span className="font-display font-bold text-xs text-[#38bdf8] tracking-wide">
+                      Core Technical Focus :
+                    </span>
+
+                    <ul className="flex flex-col gap-1.5 font-sans text-[10.5px] text-slate-300 leading-snug">
+                      <li className="flex items-start gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-sm bg-[#38bdf8] shrink-0 mt-1 shadow-[0_0_6px_#38bdf8]" />
+                        <span>Machine Learning, Scikit-learn, XGBoost & Deep Learning.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-sm bg-[#38bdf8] shrink-0 mt-1 shadow-[0_0_6px_#38bdf8]" />
+                        <span>NLP text processing, dataset feature engineering & REST API deployment.</span>
+                      </li>
+                    </ul>
+
+                    <div className="flex flex-col gap-1 mt-1 pt-2 border-t border-slate-800 font-mono text-[10px]">
+                      <div className="flex items-center justify-between text-slate-300">
+                        <span className="font-bold text-[#38bdf8]">Status :</span>
+                        <span>Final Year Engineering Student</span>
+                      </div>
+                      <div className="flex items-center justify-between text-slate-300">
+                        <span className="font-bold text-[#38bdf8]">Availability :</span>
+                        <span>Open for Internships & Job Roles</span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col items-center justify-center mt-2 pt-1.5 text-center border-t border-slate-800">
+                      <span className="id-card-back-signature font-bold">Subramanian M</span>
+                      <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider">
+                        Signature Verified
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    className="flex items-center justify-center gap-3 pt-2 border-t border-slate-700/60 w-full relative z-20"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <a
+                      href={profile.social.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon-btn h-7 w-7 text-slate-300 hover:text-white"
+                      aria-label="LinkedIn Profile"
+                    >
+                      <Linkedin size={14} />
+                    </a>
+                    <a
+                      href={profile.social.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon-btn h-7 w-7 text-slate-300 hover:text-white"
+                      aria-label="GitHub Profile"
+                    >
+                      <Github size={14} />
+                    </a>
+                    <a
+                      href={profile.social.email}
+                      className="social-icon-btn h-7 w-7 text-slate-300 hover:text-white"
+                      aria-label="Send Email"
+                    >
+                      <Mail size={14} />
+                    </a>
+                  </div>
+
+                  <svg
+                    className="absolute bottom-0 left-0 w-full h-10 pointer-events-none z-0 opacity-80"
+                    viewBox="0 0 320 40"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M0 16C60 -5 140 30 220 10C270 0 300 20 320 25V40H0V16Z" fill="url(#wave_gradient_back_1)" />
+                    <path d="M0 25C80 10 150 35 230 15C280 5 305 25 320 30V40H0V25Z" fill="url(#wave_gradient_back_2)" />
+                    <defs>
+                      <linearGradient id="wave_gradient_back_1" x1="0" y1="0" x2="320" y2="40" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#38bdf8" />
+                        <stop offset="1" stopColor="#8b5cf6" />
+                      </linearGradient>
+                      <linearGradient id="wave_gradient_back_2" x1="0" y1="0" x2="320" y2="40" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#8b5cf6" />
+                        <stop offset="1" stopColor="#3b82f6" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
             <div className="dev-pass-ambient-glow" />
           </div>
 

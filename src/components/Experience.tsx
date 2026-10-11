@@ -7,15 +7,15 @@ import { experience } from "@/data/portfolio";
 
 export default function Experience() {
   return (
-    <section id="experience" className="section-padding">
-      <div className="mx-auto max-w-3xl">
+    <section id="experience" className="section-padding relative overflow-hidden">
+      <div className="mx-auto max-w-5xl">
         <SectionHeading
-          eyebrow="Where I've worked"
-          title="Experience"
-          description="Internships"
+          eyebrow="WHERE I'VE WORKED"
+          title="Professional Experience"
+          description="Internships & Applied Technical Roles"
         />
 
-        <div className="relative pl-10">
+        <div className="relative pl-8 sm:pl-10">
           <motion.div
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
@@ -35,19 +35,22 @@ export default function Experience() {
                 transition={{ delay: i * 0.15, duration: 0.55 }}
                 className="relative"
               >
-                <span className="absolute -left-10 top-1 h-8 w-8 rounded-full glass neon-border flex items-center justify-center text-brand-cyan">
+                <span className="absolute -left-8 sm:-left-10 top-1.5 h-8 w-8 rounded-full glass neon-border flex items-center justify-center text-brand-cyan shadow-neon">
                   <Briefcase size={14} />
                 </span>
-                <div className="glass-card p-6">
+                <div className="glass-card p-6 md:p-8 hover:border-brand-cyan/40 transition-all duration-300">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <h3 className="font-display font-semibold text-lg">{e.role}</h3>
-                    <span className="text-xs font-mono text-brand-cyan">{e.period}</span>
+                    <h3 className="font-display font-bold text-xl text-white">{e.role}</h3>
+                    <span className="text-xs font-mono font-semibold px-3 py-1 rounded-full bg-brand-blue/10 border border-brand-cyan/30 text-brand-cyan">
+                      {e.period}
+                    </span>
                   </div>
-                  <p className="text-sm text-brand-purple mb-3">{e.company}</p>
-                  <ul className="space-y-1.5">
+                  <p className="text-sm font-semibold text-brand-purple mb-4">{e.company}</p>
+                  <ul className="space-y-2.5">
                     {e.points.map((pt) => (
-                      <li key={pt} className="text-sm text-ink-secondary leading-relaxed">
-                        — {pt}
+                      <li key={pt} className="text-sm text-ink-secondary leading-relaxed flex items-start gap-2">
+                        <span className="text-brand-cyan mt-1">•</span>
+                        <span>{pt}</span>
                       </li>
                     ))}
                   </ul>

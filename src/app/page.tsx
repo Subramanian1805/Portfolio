@@ -8,10 +8,10 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
-import Badges from "@/components/Badges";
+import Education from "@/components/Education";
 import Experience from "@/components/Experience";
 import Certifications from "@/components/Certifications";
-import Education from "@/components/Education";
+import Badges from "@/components/Badges";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
@@ -33,15 +33,15 @@ export default function Home() {
           >
             <ParticleBackground />
             <Navbar />
-            <main>
+            <main id="main-content" className="relative z-10">
               <Hero />
               <About />
               <Skills />
               <Projects />
-              <Badges />
+              <Education />
               <Experience />
               <Certifications />
-              <Education />
+              <Badges />
               <Contact />
             </main>
             <Footer />

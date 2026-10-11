@@ -22,31 +22,32 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://subramanian.dev"),
-  title: `${profile.name} | Data Scientist`,
+  metadataBase: new URL("https://subramanian-portfolio.vercel.app"),
+  title: `${profile.name} | Data Scientist & ML Engineer`,
   description:
-    "Portfolio of Subramanian M — a Data Scientist and UI/UX Designer crafting fast, accessible, and beautifully animated web experiences.",
+    "Portfolio of Subramanian M — Data Scientist, Machine Learning & NLP Engineer. Specialized in dataset engineering, model evaluation, and building scalable intelligent AI applications.",
   keywords: [
     "Subramanian M",
     "Data Scientist",
-    "UI/UX Designer",
-    "Next.js Developer",
+    "Machine Learning Engineer",
+    "NLP Engineer",
+    "Python Developer",
     "React Developer Portfolio",
   ],
   authors: [{ name: profile.name }],
   openGraph: {
-    title: `${profile.name} | Data Scientist & UI/UX Designer`,
+    title: `${profile.name} | Data Scientist & Machine Learning Engineer`,
     description:
-      "Explore projects, skills, and experience from Subramanian M — Data Scientist & UI/UX Designer.",
-    url: "https://subramanian.dev",
+      "Explore ML flagships, interactive skills galaxy, and experience of Subramanian M.",
+    url: "https://subramanian-portfolio.vercel.app",
     siteName: profile.name,
     type: "website",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: profile.name }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} | Data Scientist & UI/UX Designer`,
-    description: "Portfolio of Subramanian M — Data Scientist & UI/UX Designer.",
+    title: `${profile.name} | Data Scientist & ML Engineer`,
+    description: "Portfolio of Subramanian M — Data Scientist & Machine Learning Engineer.",
     images: ["/og-image.jpg"],
   },
   icons: { icon: "/favicon.ico" },
@@ -57,6 +58,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body className="bg-bg-primary text-ink-primary font-body antialiased selection:bg-brand-cyan/30">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[100] px-4 py-2 bg-brand-cyan text-black font-bold rounded-lg shadow-lg"
+        >
+          Skip to main content
+        </a>
         {children}
       </body>
     </html>

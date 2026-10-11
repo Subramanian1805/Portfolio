@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Award, ExternalLink, ShieldCheck } from "lucide-react";
@@ -26,7 +27,14 @@ function BadgeImage({ image, title, issuer }: { image?: string; title: string; i
   }
 
   return (
-    <img src={image} alt={`${issuer} ${title} badge`} className="w-full h-full object-cover rounded-lg" />
+    <Image
+      src={image}
+      alt={`${issuer} ${title} badge`}
+      width={200}
+      height={200}
+      className="w-full h-full object-cover rounded-lg"
+      unoptimized={image.endsWith(".svg")}
+    />
   );
 }
 

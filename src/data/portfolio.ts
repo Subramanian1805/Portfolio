@@ -4,15 +4,13 @@ export const profile = {
   roles: [
     "Data Scientist",
     "Machine Learning Engineer",
-    "AI Engineer",
-    "Python Developer",
-    "Full Stack Developer",
-    "UI/UX Designer"  ,
+    "NLP Engineer",
+    "AI Developer",
   ],
   phone: "+91 63795 53156",
   email: "marisubramanian01@gmail.com",
   location: "Chennai, Tamil Nadu, India",
-  resumeUrl: "/resume.pdf",
+  resumeUrl: "/Subramanian_M_Resume.pdf",
   avatar: "/profile_photo.png",
   social: {
     linkedin: "https://www.linkedin.com/in/subramanian-m-69413b309/?isSelfProfile=true",
@@ -29,10 +27,10 @@ export const navLinks = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
-  { label: "Badges", href: "#badges" },
+  { label: "Education", href: "#education" },
   { label: "Experience", href: "#experience" },
   { label: "Certificates", href: "#certifications" },
-  { label: "Education", href: "#education" },
+  { label: "Badges", href: "#badges" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -62,15 +60,7 @@ export const projects = [
     title: "HealthCare AI",
     desc: "AI model which predicts the likelihood of a patient having a heart disease based on various health parameters.",
     image: "/HealthCareAI1.png",
-    stack: ["React", "Node.js", "MongoDB", "Tailwind"],
-    github: "https://github.com/Subramanian1805/ML_Projects/tree/main/Heart_Disease_Prediction",
-    size: "lg",
-  },
-  {
-    title: "DermaCare AI",
-    desc: "AI model which predicts the dieseases of skin based on the image of the skin provided by the user.",
-    image: "/DermaCareAI.png",
-    stack: ["React", "Node.js", "MongoDB", "Tailwind"],
+    stack: ["Python", "Flask", "Scikit-learn", "JavaScript", "HTML5", "CSS3"],
     github: "https://github.com/Subramanian1805/ML_Projects/tree/main/Heart_Disease_Prediction",
     size: "lg",
   },
@@ -78,100 +68,46 @@ export const projects = [
     title: "Stroke Prediction System",
     desc: "AI model system to predict the Stroke risk based on various health parameters and lifestyle factors.",
     image: "/StrokePredictionSystem.png",
-    stack: ["React", "Node.js", "MongoDB", "Tailwind"],
+    stack: ["Python", "Flask", "XGBoost", "JavaScript", "HTML5", "CSS3", "ReportLab"],
     github: "https://github.com/Subramanian1805/ML_Projects/tree/main/Stroke_Prediction",
     size: "lg",
-  }
+  },
+  {
+    title: "DermaCare AI",
+    desc: "AI model which predicts the dieseases of skin based on the image of the skin provided by the user.",
+    image: "/DermaCareAI.png",
+    stack: ["Python", "Flask", "TensorFlow", "Keras", "JavaScript", "HTML5", "CSS3"],
+    github: "https://github.com/Subramanian1805/Deep_Learning_Projects/tree/main/Derma_Care_Skin_Disease",
+    size: "lg",
+  },
 ];
 
 export const skills = [
   "Python", "TensorFlow", "PyTorch", "Scikit-Learn", "Pandas", "NumPy", "SQL", "MySQL", "Tableau", "Power BI", "Matplotlib", "Plotly", "Streamlit", "HTML5", "CSS3",
   "Git", "GitHub", "Figma", "Excel"
-];
-
-export const marqueeSkillsRow1 = [
-  { name: "Python", icon: "SiPython" },
-  { name: "TensorFlow", icon: "SiTensorflow" },
-  { name: "Matplotlib", icon: "SiMatplotlib" },
-  { name: "Scikit-Learn", icon: "SiScikitlearn" },
-  { name: "Pandas", icon: "SiPandas" },
-  { name: "NumPy", icon: "SiNumpy" },
-  { name: "MySQL", icon: "SiMysql" },
-  { name: "Tableau", icon: "SiTableau" },
-  { name: "Power BI", icon: "SiPowerbi" },
-  { name: "Figma", icon: "SiFigma" }
-];
-
-export const marqueeSkillsRow2 = [
-  { name: "Git", icon: "SiGit" },
-  { name: "GitHub", icon: "SiGithub" },
-  { name: "Vercel", icon: "SiVercel" },
-  { name: "Streamlit", icon: "SiStreamlit" },
-  { name: "HTML5", icon: "SiHtml5" },
-  { name: "CSS3", icon: "SiCss" },
-  { name: "Plotly", icon: "SiPlotly" },
-  { name: "Excel", icon: "SiMicrosoftexcel" },
-  { name: "SQL", icon: "SiPostgresql" }
-];
-
-export const achievements = [
-  { category: "Hackathon Awards", title: "Smart India Hackathon — Finalist", year: "2025", desc: "Built an AI-driven civic issue reporting platform, shortlisted among top 50 national teams." },
-  { category: "Innovation Exhibitions", title: "College Tech Expo — Best Innovation", year: "2024", desc: "Presented a smart attendance system using facial recognition, awarded Best Innovation." },
-  { category: "Technical Events", title: "Code Sprint — 1st Runner-up", year: "2024", desc: "Competitive programming and full-stack build sprint across 12 hours." },
-  { category: "Presentations", title: "State-level Tech Symposium Speaker", year: "2023", desc: "Presented on modern web architecture to 200+ engineering students." },
-];
-
-export const products = [
-  { name: "AppWrite", desc: "Self-hosted backend-as-a-service exploration for rapid app prototyping.", stack: ["Docker", "Node.js"], status: "Active", progress: 90 },
-  { name: "NeuroScan AI", desc: "An AI-assisted medical image screening tool for early anomaly detection.", stack: ["Python", "TensorFlow"], status: "In Progress", progress: 65 },
-  { name: "LawBot", desc: "A legal-document Q&A assistant powered by retrieval-augmented generation.", stack: ["Next.js", "LangChain"], status: "In Progress", progress: 55 },
-  { name: "Data Analyst AI Agent", desc: "An autonomous agent that cleans, analyzes, and visualizes CSV datasets on request.", stack: ["Python", "OpenAI API"], status: "Active", progress: 80 },
-  { name: "MaxGroup Hub Site", desc: "A corporate hub website for a multi-division business group.", stack: ["Next.js", "Tailwind"], status: "Completed", progress: 100 },
-  { name: "MR Builders Site", desc: "A construction company website with project galleries and lead capture.", stack: ["React", "Firebase"], status: "Completed", progress: 100 },
-];
+]
 
 export const badges = [
   {
     title: "Introduction to Mobile App Development",
     issuer: "Coursera",
-    date: "July 2025",
+    date: "2024",
     link: "/C/Badges/Coursera_20Intro_20to_20Mobile_20App_20Development.png",
     image: "/C/Badges/Coursera_20Intro_20to_20Mobile_20App_20Development.png",
   },
-    {
+  {
     title: "MongoDB Basics for Students",
     issuer: "MongoDB",
     date: "2024",
     link: "/C/Badges/mongodb-basics-for-students.png",
     image: "/C/Badges/mongodb-basics-for-students.png",
   },
-    {
+  {
     title: "Get Started with Power BI",
     issuer: "Microsoft",
     date: "2024",
-    link: "/C/Badges/Screenshot_2026-07-04-19-05-44-422_com.opera.browser.afin-edit.jpg",
-    image: "/C/Badges/Screenshot_2026-07-04-19-05-44-422_com.opera.browser.afin-edit.jpg",
-  },
-    {
-    title: "Introduction to End Analytics",
-    issuer: "Microsoft Fabric",
-    date: "2024",
-    link: "/C/Badges/Screenshot_2026-07-04-19-06-14-314_com.opera.browser.afin-edit.jpg",
-    image: "/C/Badges/Screenshot_2026-07-04-19-06-14-314_com.opera.browser.afin-edit.jpg",
-  },
-  {
-    title: "Skillsoft Cybersecurity",
-    issuer: "Skillsoft",
-    date: "2024",
-    link: "/C/Badges/Skillsoft - Cybersecurity.png",
-    image: "/C/Badges/Skillsoft - Cybersecurity.png",
-  },
-  {
-    title: "OCI25FNDCFAV1",
-    issuer: "Oracle",
-    date: "2024",
-    link: "/C/Badges/OCI25FNDCFAV1.png",
-    image: "/C/Badges/OCI25FNDCFAV1.png",
+    link: "/C/Badges/get-started-power-bi.svg",
+    image: "/C/Badges/get-started-power-bi.svg",
   },
   {
     title: "Introduction to End Analytics",
@@ -181,11 +117,18 @@ export const badges = [
     image: "/C/Badges/introduction-end-analytics-use-microsoft-fabric.svg",
   },
   {
-    title: "Get Started with Power BI",
-    issuer: "Microsoft",
+    title: "Skillsoft Cybersecurity",
+    issuer: "Skillsoft",
     date: "2024",
-    link: "/C/Badges/get-started-power-bi.svg",
-    image: "/C/Badges/get-started-power-bi.svg",
+    link: "/C/Badges/Skillsoft - Cybersecurity.png",
+    image: "/C/Badges/Skillsoft - Cybersecurity.png",
+  },
+  {
+    title: "Oracle Cloud Infrastructure Foundations",
+    issuer: "Oracle",
+    date: "2024",
+    link: "/C/Badges/OCI25FNDCFAV1.png",
+    image: "/C/Badges/OCI25FNDCFAV1.png",
   },
 ];
 
@@ -528,29 +471,27 @@ export const experience = [
   {
     role: "UI / UX Intern",
     company: "NSIC Technical Services Centre",
-    period: "Jan 2025 — Feb 2025",
+    period: "Jan 2025 - Feb 2025",
     points: [
-      "Applied UI/UX design principles to create intuitive and user-centric digital interfaces.",
-      "Replicated Spotify's complete UI/UX in a high-fidelity design project using industry best practices.",
-      "Designed a full Spotify-inspired UI prototype, demonstrating expertise in wireframing, prototyping, and visual design.",
-      "Gained hands-on experience in UI/UX design by recreating Spotify's interface with a focus on usability and consistency.",
-      "Built a pixel-perfect Spotify UI/UX clone, showcasing proficiency in modern design principles and design tools.",
+      "Designed and prototyped responsive web interfaces using Figma, applying core visual hierarchy, grid systems, and typography rules.",
+      "Engineered high-fidelity interactive component sets and layout systems, adhering to standard 60-30-10 visual design principles.",
+      "Executed a comprehensive end-to-end user interface overhaul project, optimizing usability and layout accessibility.",
     ],
   },
   {
-    role: "AI/NLP Model Developer Intern",
+    role: "AI / NLP Model Developer Intern",
     company: "Iconic Hub",
-    period: "2024 — Present",
+    period: "July 2026 - Oct 2026",
     points: [
-      "Delivered 10+ client websites across business and agency niches",
-      "Managed end-to-end project scope, design, and deployment",
-      "Maintained long-term client relationships through support contracts",
+      "Engineered NLP text preprocessing and feature extraction pipelines using Python, NLTK, and Scikit-learn.",
+      "Developed and evaluated deep learning architectures (BiGRU) for text classification with cross-validation metrics.",
+      "Built high-throughput RESTful model inference endpoints using FastAPI for real-time AI predictions.",
     ],
   },
 ];
 
 export const education = [
-  { level: "B.E. Computer Science Engineering", school: "Dhaanish Ahmed College of Engineering", period: "2023 — 2027", score: "8.4 CGPA" },
-  { level: "Higher Secondary (XII)", school: "Don Bosco Higher Secondary School", period: "2022 — 2023", score: "76%" },
-  { level: "Senior Secondary (X)", school: "Sri Bala Vidyalaya Senior Secondary School", period: "2020 — 2021", score: "75%" },
+  { level: "B.E. Computer Science Engineering", school: "Dhaanish Ahmed College of Engineering", period: "2023 - 2027", score: "8.4 CGPA" },
+  { level: "Higher Secondary (XII)", school: "Don Bosco Higher Secondary School", period: "2022 - 2023", score: "76%" },
+  { level: "Senior Secondary (X)", school: "Sri Bala Vidyalaya Senior Secondary School", period: "2020 - 2021", score: "75%" },
 ];

@@ -16,7 +16,7 @@ import {
 } from "react-icons/si";
 import { IoLogoTableau } from "react-icons/io5";
 import { BsFileExcel } from "react-icons/bs";
-import { SKILLS, fadeUp, stagger, Skill } from "@/data/constants";
+import { SKILLS, SPECIFIED_SKILL_ROWS, stagger, Skill } from "@/data/constants";
 
 const PowerBISvg = ({ size = 24, className = "", style }: { size?: number; className?: string; style?: React.CSSProperties }) => (
   <svg viewBox="0 0 24 24" className={className} style={style} width={size} height={size}>
@@ -36,20 +36,18 @@ const iconMap: Record<string, React.ComponentType<{ size?: number; className?: s
   SiPostgresql, SiReact, SiNextdotjs, SiTailwindcss, SiNodedotjs
 };
 
-/* ── burst particle generation ── */
-const PARTICLE_COUNT = 12;
+const PARTICLE_COUNT = 10;
 
 function generateParticles() {
   return Array.from({ length: PARTICLE_COUNT }, (_, i) => {
     const angle = (i / PARTICLE_COUNT) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
-    const distance = 40 + Math.random() * 45;
-    const size = 3 + Math.random() * 5;
-    const duration = 0.4 + Math.random() * 0.25;
+    const distance = 35 + Math.random() * 40;
+    const size = 3 + Math.random() * 4;
+    const duration = 0.35 + Math.random() * 0.2;
     return { angle, distance, size, duration, id: i };
   });
 }
 
-/* ── burst particles overlay ── */
 function BurstParticles({ color = "#38bdf8", onComplete }: { color?: string; onComplete?: () => void }) {
   const particles = useRef(generateParticles()).current;
 
@@ -58,22 +56,14 @@ function BurstParticles({ color = "#38bdf8", onComplete }: { color?: string; onC
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          initial={{
-            x: 0,
-            y: 0,
-            opacity: 1,
-            scale: 1,
-          }}
+          initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
           animate={{
             x: Math.cos(p.angle) * p.distance,
             y: Math.sin(p.angle) * p.distance,
             opacity: 0,
             scale: 0,
           }}
-          transition={{
-            duration: p.duration,
-            ease: "easeOut",
-          }}
+          transition={{ duration: p.duration, ease: "easeOut" }}
           onAnimationComplete={p.id === 0 ? onComplete : undefined}
           className="absolute left-1/2 top-1/2 rounded-full"
           style={{
@@ -87,65 +77,66 @@ function BurstParticles({ color = "#38bdf8", onComplete }: { color?: string; onC
         />
       ))}
 
-      {/* Central flash ring */}
       <motion.div
         initial={{ scale: 0.2, opacity: 0.8 }}
         animate={{ scale: 2.2, opacity: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
         style={{
-          width: 50,
-          height: 50,
+          width: 44,
+          height: 44,
           border: `2px solid ${color}`,
-          boxShadow: `0 0 20px ${color}`,
+          boxShadow: `0 0 16px ${color}`,
         }}
       />
     </div>
   );
 }
 
-/* ── single bubble that flees cursor / touch with organic zero-G float ── */
 function SkillOrb({
   skill,
   index,
+  pointerPos,
 }: {
   skill: Skill;
   index: number;
+  pointerPos: { x: number; y: number } | null;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [popped, setPopped] = useState(false);
   const [showParticles, setShowParticles] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  /* motion values driven by proximity */
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
 
-  /* spring-damped for a rubbery water bubble feel */
   const x = useSpring(rawX, { stiffness: 180, damping: 16, mass: 0.5 });
   const y = useSpring(rawY, { stiffness: 180, damping: 16, mass: 0.5 });
 
   const dist = useMotionValue(0);
-  const scaleMapped = useTransform(dist, [0, 60], [1, 1.18]);
+  const scaleMapped = useTransform(dist, [0, 60], [1, 1.15]);
   const scale = useSpring(scaleMapped, { stiffness: 300, damping: 20 });
 
-  const FLEE_RADIUS = 110;
-  const FLEE_STRENGTH = 45;
+  const FLEE_RADIUS = 100;
+  const FLEE_STRENGTH = 40;
 
-  // Float animation parameters unique per orb for zero-g effect
   const floatDuration = useMemo(() => 3 + (index % 4) * 0.7, [index]);
   const floatDelay = useMemo(() => (index % 5) * 0.4, [index]);
 
-  const updateProximity = useCallback((px: number, py: number) => {
-    const el = ref.current;
-    if (!el) return;
+  useEffect(() => {
+    if (!pointerPos || !ref.current) {
+      rawX.set(0);
+      rawY.set(0);
+      dist.set(0);
+      return;
+    }
 
-    const rect = el.getBoundingClientRect();
+    const rect = ref.current.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
 
-    const dx = cx - px;
-    const dy = cy - py;
+    const dx = cx - pointerPos.x;
+    const dy = cy - pointerPos.y;
     const d = Math.sqrt(dx * dx + dy * dy);
 
     if (d < FLEE_RADIUS && d > 0) {
@@ -159,42 +150,8 @@ function SkillOrb({
       rawY.set(0);
       dist.set(0);
     }
-  }, [rawX, rawY, dist]);
+  }, [pointerPos, rawX, rawY, dist]);
 
-  useEffect(() => {
-    const handleMove = (e: MouseEvent | TouchEvent) => {
-      let clientX = 0;
-      let clientY = 0;
-      if ("touches" in e && e.touches.length > 0) {
-        clientX = e.touches[0].clientX;
-        clientY = e.touches[0].clientY;
-      } else if ("clientX" in e) {
-        clientX = (e as MouseEvent).clientX;
-        clientY = (e as MouseEvent).clientY;
-      } else {
-        return;
-      }
-      updateProximity(clientX, clientY);
-    };
-
-    const handleLeave = () => {
-      rawX.set(0);
-      rawY.set(0);
-      dist.set(0);
-    };
-
-    window.addEventListener("pointermove", handleMove, { passive: true });
-    window.addEventListener("touchmove", handleMove, { passive: true });
-    window.addEventListener("pointerleave", handleLeave, { passive: true });
-
-    return () => {
-      window.removeEventListener("pointermove", handleMove);
-      window.removeEventListener("touchmove", handleMove);
-      window.removeEventListener("pointerleave", handleLeave);
-    };
-  }, [updateProximity, rawX, rawY, dist]);
-
-  /* ── click/tap → pop → reform ── */
   const handlePop = useCallback(() => {
     if (popped) return;
     setPopped(true);
@@ -222,18 +179,16 @@ function SkillOrb({
       aria-label={skill.name}
       onClick={handlePop}
     >
-      {/* Burst particles */}
       <AnimatePresence>
         {showParticles && (
           <BurstParticles color={brandColor} onComplete={handleParticlesDone} />
         )}
       </AnimatePresence>
 
-      {/* Ambient Bobbing Wrapper */}
       <motion.div
         animate={{
-          y: [0, -6, 0, 6, 0],
-          rotate: [0, 1.5, 0, -1.5, 0],
+          y: [0, -5, 0, 5, 0],
+          rotate: [0, 1.2, 0, -1.2, 0],
         }}
         transition={{
           duration: floatDuration,
@@ -243,36 +198,29 @@ function SkillOrb({
         }}
         className="flex flex-col items-center"
       >
-        {/* Outer aura glow */}
         <div 
           className="absolute -inset-2 rounded-full opacity-30 blur-lg transition-all duration-500 group-hover:opacity-100 group-hover:blur-xl pointer-events-none"
           style={{ backgroundColor: `${brandColor}40` }}
         />
 
-        {/* Circular icon badge */}
         <motion.div
           animate={
             popped
               ? {
                   scale: 0,
                   opacity: 0,
-                  borderColor: "rgba(56,189,248,0)",
                   transition: { duration: 0.15, ease: "easeIn" },
                 }
               : {
                   scale: 1,
                   opacity: 1,
                   borderColor: `${brandColor}45`,
-                  transition: {
-                    type: "spring",
-                    stiffness: 260,
-                    damping: 14,
-                  },
+                  transition: { type: "spring", stiffness: 260, damping: 14 },
                 }
           }
-          className="relative flex h-[54px] w-[54px] sm:h-[64px] sm:w-[64px] md:h-[72px] md:w-[72px] items-center justify-center rounded-full border bg-[#080d26]/90 shadow-[0_8px_25px_rgba(5,12,40,0.8)] backdrop-blur-md transition-all duration-300 group-hover:scale-105 group-hover:border-white/40"
+          className="relative flex h-[54px] w-[54px] sm:h-[64px] sm:w-[64px] md:h-[70px] md:w-[70px] items-center justify-center rounded-full border bg-[#080d26]/90 shadow-[0_8px_25px_rgba(5,12,40,0.8)] backdrop-blur-md transition-all duration-300 group-hover:scale-105 group-hover:border-white/40"
           style={{
-            boxShadow: `0 0 20px ${brandColor}20, inset 0 0 15px ${brandColor}15`,
+            boxShadow: `0 0 18px ${brandColor}20, inset 0 0 12px ${brandColor}15`,
           }}
         >
           {skill.file && !imageError ? (
@@ -295,7 +243,6 @@ function SkillOrb({
           )}
         </motion.div>
 
-        {/* Skill Label + Category Tag */}
         <div
           className="mt-1.5 flex flex-col items-center opacity-95 transition-all duration-300 group-hover:scale-105 pointer-events-none"
           style={popped ? { visibility: "hidden" } : undefined}
@@ -314,9 +261,10 @@ function SkillOrb({
   );
 }
 
-/* ── main section ── */
 export default function SkillsSection() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [pointerPos, setPointerPos] = useState<{ x: number; y: number } | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const categories = [
     { id: "all", label: "All Tech" },
@@ -326,36 +274,22 @@ export default function SkillsSection() {
     { id: "tools", label: "Tools & Platforms" },
   ];
 
-  const filteredSkills = useMemo(() => {
-    return activeCategory === "all"
-      ? SKILLS
-      : SKILLS.filter((s) => s.category === activeCategory);
+  const staggeredRows = useMemo(() => {
+    if (activeCategory === "all") {
+      return SPECIFIED_SKILL_ROWS;
+    }
+    return SPECIFIED_SKILL_ROWS.map((row) =>
+      row.filter((s) => s.category === activeCategory)
+    ).filter((row) => row.length > 0);
   }, [activeCategory]);
 
-  // Organic Honeycomb / Staggered Constellation Rows
-  // Breaks filteredSkills into staggered alternating rows (e.g. 3, 4, 5, 5, 4, 3 or 3, 3) for an impressive non-rectangular pattern
-  const staggeredRows = useMemo(() => {
-    const rows: Skill[][] = [];
-    let currentIdx = 0;
-    
-    // Custom staggered pattern lengths depending on count
-    const pattern = filteredSkills.length > 12 
-      ? [3, 4, 5, 5, 4, 3]  // Organic Honeycomb Diamond layout for 24 items
-      : [3, 3];             // Balanced cluster for 6 items in individual categories
+  const handlePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    setPointerPos({ x: e.clientX, y: e.clientY });
+  }, []);
 
-    for (const count of pattern) {
-      if (currentIdx >= filteredSkills.length) break;
-      rows.push(filteredSkills.slice(currentIdx, currentIdx + count));
-      currentIdx += count;
-    }
-
-    // Capture any remaining items
-    if (currentIdx < filteredSkills.length) {
-      rows.push(filteredSkills.slice(currentIdx));
-    }
-
-    return rows;
-  }, [filteredSkills]);
+  const handlePointerLeave = useCallback(() => {
+    setPointerPos(null);
+  }, []);
 
   return (
     <motion.section
@@ -366,7 +300,6 @@ export default function SkillsSection() {
       viewport={{ once: true, amount: 0.1 }}
       className="relative mx-auto w-full max-w-6xl px-4 py-16 sm:py-20 md:py-24 md:px-8 overflow-hidden"
     >
-      {/* Ambient background glows */}
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-blue/10 blur-[130px]" />
         <div className="absolute right-1/4 top-1/3 h-[320px] w-[320px] bg-brand-purple/10 rounded-full blur-[110px]" />
@@ -378,10 +311,9 @@ export default function SkillsSection() {
           Interactive <span className="gradient-text">Skill Galaxy</span>
         </h2>
         <p className="mt-3 max-w-2xl text-center text-xs sm:text-sm md:text-base text-ink-secondary leading-relaxed px-2">
-          Explore my interactive tech ecosystem. Touch or hover bubbles to displace zero-gravity water orbs, or tap to trigger particle pops.
+          Explore my tech stack. Hover over or tap bubbles to displace orbs or trigger particle pops.
         </p>
 
-        {/* Category Filter Pills */}
         <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 p-2 rounded-full bg-[#0a0f2d]/80 border border-white/10 backdrop-blur-md shadow-2xl max-w-full overflow-x-auto">
           {categories.map((cat) => (
             <button
@@ -406,8 +338,12 @@ export default function SkillsSection() {
         </div>
       </div>
 
-      {/* Organic Floating Honeycomb Constellation */}
-      <div className="relative z-10 mx-auto mt-10 sm:mt-12 flex max-w-5xl flex-col items-center gap-4 sm:gap-6 min-h-[340px]">
+      <div
+        ref={containerRef}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+        className="relative z-10 mx-auto mt-10 sm:mt-12 flex max-w-5xl flex-col items-center gap-4 sm:gap-6 min-h-[340px]"
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -424,7 +360,6 @@ export default function SkillsSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: rowIndex * 0.05 }}
                 className={`flex flex-wrap items-center justify-center gap-4 sm:gap-8 md:gap-10 ${
-                  // Offset alternating rows to create organic honeycomb diamond pattern instead of rigid rectangle grid
                   rowIndex % 2 === 1 ? "sm:px-8 px-2" : ""
                 }`}
               >
@@ -433,6 +368,7 @@ export default function SkillsSection() {
                     key={`${activeCategory}-${skill.name}`}
                     skill={skill}
                     index={rowIndex * 5 + itemIndex}
+                    pointerPos={pointerPos}
                   />
                 ))}
               </motion.div>

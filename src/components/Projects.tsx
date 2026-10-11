@@ -1,20 +1,53 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowUpRight, Github, ExternalLink, FileText } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Github, X, Cpu } from "lucide-react";
 import { projects } from "@/data/portfolio";
 
-function ProjectCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
+interface ProjectDetails {
+  title: string;
+  desc: string;
+  image: string;
+  stack: string[];
+  github: string;
+  architecture?: string;
+  metrics?: string;
+  features?: string;
+}
+
+const extendedProjectData: Record<string, { architecture: string; metrics: string; features: string }> = {
+  "HealthCare AI": {
+    architecture: "Binary Classification model utilizing Scikit-learn Logistic Regression and Random Forest with cross-validated hyperparameter tuning.",
+    metrics: "Achieved ~88% ROC-AUC evaluation accuracy on test dataset split.",
+    features: "Age, blood pressure, cholesterol levels, resting ECG results, max heart rate, chest pain type.",
+  },
+  "Stroke Prediction System": {
+    architecture: "Gradient Boosting model utilizing XGBoost with SMOTE oversampling for imbalanced medical class distributions.",
+    metrics: "Achieved 0.91 ROC-AUC score; serialized model served via Flask REST API.",
+    features: "Hypertension, heart disease status, average glucose level, BMI, smoking history, age bracket.",
+  },
+  "DermaCare AI": {
+    architecture: "Convolutional Neural Network (CNN) built with TensorFlow/Keras fine-tuned on skin lesion datasets with data augmentation.",
+    metrics: "Achieved multi-class prediction with dynamic confidence scoring and image preprocessing pipeline.",
+    features: "Skin image tensor input (224x224 RGB), batch normalization, dropout regularization, Softmax output.",
+  },
+};
+
+function ProjectCard({
+  project,
+  index,
+  onSelect,
+}: {
+  project: (typeof projects)[number];
+  index: number;
+  onSelect: (p: (typeof projects)[number]) => void;
+}) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
-
-  // Check file formats dynamically
-  const isVideo = /\.(mp4|webm|ogg)$/i.test(project.image);
-  const isPdf = /\.pdf$/i.test(project.image);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const el = cardRef.current;
@@ -23,8 +56,8 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const tiltX = (x / rect.width - 0.5) * 8; // Max 8deg tilt to keep it subtle
-    const tiltY = (y / rect.height - 0.5) * -8;
+    const tiltX = (x / rect.width - 0.5) * 6;
+    const tiltY = (y / rect.height - 0.5) * -6;
 
     setTilt({ x: tiltX, y: tiltY });
     setMousePos({ x, y });
@@ -32,34 +65,12 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
 
   function handleMouseEnter() {
     setHovered(true);
-    if (isVideo && videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
   }
 
   function handleMouseLeave() {
     setTilt({ x: 0, y: 0 });
     setHovered(false);
-    if (isVideo && videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
   }
-
-  function handleCardClick() {
-    if (isPdf) {
-      window.open(project.image, "_blank");
-    } else if (project.demo) {
-      window.open(project.demo, "_blank");
-    }
-  }
-
-  const categories: Record<string, string> = {
-    "Business Event Portal": "Full Stack Development",
-    "Tourist Mobile App": "Mobile Architecture & AI",
-    "SEO Campaign Suite": "Data Analytics & SaaS",
-  };
-  const category = categories[project.title] || "Software Engineering";
 
   return (
     <motion.div
@@ -67,14 +78,13 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={handleCardClick}
+      onClick={() => onSelect(project)}
       style={{
-        transform: `perspective(1000px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg) scale3d(${hovered ? 1.03 : 1}, ${hovered ? 1.03 : 1}, 1)`,
-        transition: hovered ? "none" : "all 0.5s ease-out",
+        transform: `perspective(1000px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg) scale3d(${hovered ? 1.02 : 1}, ${hovered ? 1.02 : 1}, 1)`,
+        transition: hovered ? "none" : "all 0.4s ease-out",
       }}
-      className="glass-card group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c102b]/60 to-[#050816]/90 p-1 shadow-2xl transition-all duration-300 w-full h-[470px] cursor-pointer"
+      className="glass-card group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0c102b]/70 to-[#050816]/95 p-1 shadow-2xl transition-all duration-300 w-full h-[460px] cursor-pointer"
     >
-      {/* Dynamic Cursor Spotlight Radial Background */}
       {hovered && (
         <div
           className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
@@ -84,7 +94,6 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
         />
       )}
 
-      {/* Card Border Hover Glow */}
       <div
         className={`absolute inset-0 z-0 rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
           index % 2 === 0 ? "neon-border" : "neon-border-purple"
@@ -93,53 +102,18 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
       />
 
       <div className="relative z-10 flex flex-col h-full justify-between">
-        {/* Project Image Panel */}
-        <div className="relative h-56 overflow-hidden rounded-2xl m-3 border border-white/5 flex items-center justify-center bg-[#050816]">
-          {isPdf ? (
-            /* PDF Custom Vector Representation */
-            <div className="h-full w-full bg-gradient-to-br from-brand-purple/20 via-[#0a0e28] to-brand-cyan/20 flex flex-col items-center justify-center p-6 text-center">
-              <div className="relative h-20 w-16 bg-[#0c1135] border border-white/10 rounded-lg flex flex-col justify-between p-2.5 shadow-2xl group-hover:scale-105 transition-transform duration-300">
-                <span className="absolute top-1 right-1 bg-red-500 text-[6px] font-mono font-bold text-white px-1 rounded">PDF</span>
-                <FileText size={22} className="text-brand-cyan mt-1" />
-                <div className="h-1.5 w-10 bg-white/10 rounded mt-1" />
-                <div className="h-1.5 w-6 bg-white/10 rounded" />
-                <div className="flex justify-between items-center pt-1 border-t border-white/5 mt-1">
-                  <span className="text-[5px] text-brand-green font-mono">VERIFIED</span>
-                  <div className="h-2 w-2 rounded-full bg-yellow-500 flex items-center justify-center text-[4px] text-black">★</div>
-                </div>
-              </div>
-              <span className="text-[10px] font-mono tracking-[0.2em] text-brand-cyan uppercase mt-4">
-                PDF SPECIFICATION DOCUMENT
-              </span>
-              <span className="text-[9px] text-ink-secondary mt-1">
-                Click card to open document
-              </span>
-            </div>
-          ) : isVideo ? (
-            /* Autoplay Video Player on Hover */
-            <video
-              ref={videoRef}
-              src={project.image}
-              muted
-              loop
-              playsInline
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            />
-          ) : (
-            /* Standard Responsive Image */
-            <img
-              src={project.image}
-              alt={project.title}
-              loading="lazy"
-              className="h-full w-full object-contain bg-white/5 p-2 transition-transform duration-700 ease-out group-hover:scale-105"
-            />
-          )}
-
+        <div className="relative h-52 overflow-hidden rounded-2xl m-3 border border-white/5 flex items-center justify-center bg-[#050816]">
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={400}
+            height={220}
+            className="h-full w-full object-contain bg-white/5 p-2 transition-transform duration-700 ease-out group-hover:scale-105"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent opacity-60 pointer-events-none" />
           
-          {/* Tech stack float overlay */}
           <div className="absolute bottom-3 left-3 flex flex-wrap gap-1.5 opacity-90 transition-opacity group-hover:opacity-100 pointer-events-none">
-            {project.stack.map((s) => (
+            {project.stack.slice(0, 4).map((s) => (
               <span
                 key={s}
                 className="text-[9px] font-mono font-medium px-2 py-0.5 rounded-md bg-[#050816]/90 text-brand-cyan border border-white/10"
@@ -147,14 +121,18 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
                 {s}
               </span>
             ))}
+            {project.stack.length > 4 && (
+              <span className="text-[9px] font-mono font-medium px-2 py-0.5 rounded-md bg-[#050816]/90 text-brand-purple border border-white/10">
+                +{project.stack.length - 4}
+              </span>
+            )}
           </div>
         </div>
 
-        {/* Text Details */}
         <div className="px-6 pb-6 pt-1 flex-grow flex flex-col justify-between">
           <div className="text-left">
             <span className="text-[10px] font-mono font-semibold tracking-wider text-brand-purple uppercase">
-              {category}
+              MACHINE LEARNING FLAGSHIP
             </span>
             <h3 className="mt-1 font-display text-lg font-bold tracking-tight text-white group-hover:text-brand-cyan transition-colors duration-300">
               {project.title}
@@ -164,7 +142,6 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
             </p>
           </div>
 
-          {/* Action Row */}
           <div className="mt-5 flex items-center justify-between">
             <div className="flex gap-4">
               <a
@@ -175,21 +152,10 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
                 onClick={(e) => e.stopPropagation()}
                 aria-label={`View source code of ${project.title} on GitHub`}
               >
-                <Github size={13} /> CODE
-              </a>
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-[10px] font-mono text-brand-cyan hover:text-white transition-colors"
-                onClick={(e) => e.stopPropagation()}
-                aria-label={`View live demo of ${project.title}`}
-              >
-                <ExternalLink size={13} /> LIVE
+                <Github size={13} /> GITHUB REPO
               </a>
             </div>
 
-            {/* Dynamic Arrow Indicator */}
             <div
               className="h-9 w-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white transition-all duration-300 group-hover:bg-brand-blue group-hover:text-white group-hover:shadow-neon group-hover:border-transparent"
             >
@@ -203,60 +169,119 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
 }
 
 export default function Projects() {
+  const [selectedProject, setSelectedProject] = useState<(typeof projects)[number] | null>(null);
+
+  const extraInfo = selectedProject ? extendedProjectData[selectedProject.title] : null;
+
   return (
     <section id="projects" className="section-padding bg-[#050816]/40 relative overflow-hidden">
-      {/* Ambient background accent light */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-blue/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="mx-auto max-w-6xl relative z-10">
-        
-        {/* Premium SaaS style top row */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end mb-12">
           <div className="md:col-span-7 text-left">
-            <span className="eyebrow">SELECTED WORKS</span>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-              Crafting Digital Solutions <br />
-              <span className="gradient-text">Through Data & Code</span>
+            <span className="eyebrow">FEATURED ML PROJECTS</span>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight text-white">
+              Intelligent ML Models & <br />
+              <span className="gradient-text">Predictive Systems</span>
             </h2>
           </div>
           <div className="md:col-span-5 flex flex-col items-start md:items-end text-left md:text-right">
             <p className="text-ink-secondary text-sm md:text-base leading-relaxed mb-4 max-w-md">
-              A curated showcase of applications leveraging full-stack web engineering, 
-              robust machine learning models, and intuitive UI/UX design.
+              End-to-end Machine Learning and Deep Learning implementations featuring feature engineering, evaluation metrics, and API integration.
             </p>
           </div>
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-center">
+          {projects.map((p, index) => (
+            <div key={`p-static-${index}`} className="w-full">
+              <ProjectCard project={p} index={index} onSelect={setSelectedProject} />
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Dynamic Projects Presentation: Marquee if > 3 projects, Static layout if <= 3 projects */}
-      {projects.length > 3 ? (
-        <div className="w-full relative marquee-container hover-pause py-4">
-          <div className="marquee-content-left gap-6 px-3">
-            {projects.map((p, index) => (
-              <div key={`p1-${index}`} className="w-[280px] sm:w-[340px] shrink-0">
-                <ProjectCard project={p} index={index} />
+      {/* Case Study Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl glass p-6 md:p-8 border border-white/10 bg-[#070c22] text-white shadow-2xl text-left"
+            >
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-5 right-5 p-2 rounded-full glass hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                aria-label="Close modal"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="flex items-center gap-2 text-xs font-mono text-brand-cyan mb-2">
+                <Cpu size={15} /> CASE STUDY ARCHITECTURE
               </div>
-            ))}
-          </div>
-          <div className="marquee-content-left gap-6 px-3" aria-hidden="true">
-            {projects.map((p, index) => (
-              <div key={`p2-${index}`} className="w-[280px] sm:w-[340px] shrink-0">
-                <ProjectCard project={p} index={index} />
+
+              <h3 className="text-2xl font-bold font-display text-white mb-2">{selectedProject.title}</h3>
+              <p className="text-sm text-ink-secondary leading-relaxed mb-6">{selectedProject.desc}</p>
+
+              <div className="space-y-4 text-xs font-mono border-t border-white/10 pt-4">
+                {extraInfo && (
+                  <>
+                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/5">
+                      <span className="text-brand-purple font-bold block mb-1">MODEL ARCHITECTURE:</span>
+                      <span className="text-gray-300 font-sans">{extraInfo.architecture}</span>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/5">
+                      <span className="text-brand-cyan font-bold block mb-1">KEY PERFORMANCE METRICS:</span>
+                      <span className="text-gray-300 font-sans">{extraInfo.metrics}</span>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/5">
+                      <span className="text-brand-green font-bold block mb-1">INPUT FEATURES:</span>
+                      <span className="text-gray-300 font-sans">{extraInfo.features}</span>
+                    </div>
+                  </>
+                )}
+
+                <div className="pt-2">
+                  <span className="text-gray-400 font-bold block mb-2">TECHNOLOGY STACK:</span>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedProject.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 rounded-lg bg-brand-blue/10 border border-brand-cyan/30 text-brand-cyan text-xs font-sans"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className="mx-auto max-w-6xl px-6 py-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
-            {projects.map((p, index) => (
-              <div key={`p-static-${index}`} className="w-full">
-                <ProjectCard project={p} index={index} />
+
+              <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between">
+                <a
+                  href={selectedProject.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary text-xs py-2.5 px-5 inline-flex items-center gap-2"
+                >
+                  <Github size={16} /> View GitHub Source Code
+                </a>
+                <button
+                  onClick={() => setSelectedProject(null)}
+                  className="btn-secondary text-xs py-2.5 px-4"
+                >
+                  Close Case Study
+                </button>
               </div>
-            ))}
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </section>
   );
 }
